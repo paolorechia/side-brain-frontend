@@ -1,37 +1,4 @@
-function paragraph(text, cssClasses) {
-    const p = document.createElement("p")
-    p.innerText = text
-    cssClasses.map(cls => {
-        p.classList.add(cls)
-    })
-    return p
-}
-
-function div(cssClasses) {
-    const d = document.createElement("div")
-    cssClasses.map(cls => {
-        d.classList.add(cls)
-    })
-    return d
-}
-
-function button(text, cssClasses) {
-    const button = document.createElement("button")
-    button.innerText = text
-    cssClasses.map(cls => {
-        button.classList.add(cls)
-    })
-    return button
-}
-
-function input(placeholder, cssClasses) {
-    const input = document.createElement("input")
-    input.placeholder = placeholder
-    cssClasses.map(cls => {
-        input.classList.add(cls)
-    })
-    return input
-}
+import { div, button, paragraph, input, route, attach } from "./easydom"
 
 function homeView(store, uiStore) {
     const d = div(["home-div"])
@@ -112,13 +79,5 @@ function createFlashcardView() {
     return div
 }
 
-function route(rootId, element) {
-    let root = document.getElementById(rootId)
-    root.appendChild(element)
-}
 
-function attach(parent, child) {
-    parent.appendChild(child)
-}
-
-export { div, button, attach, route, flashcardView, createFlashcardView, homeView, listFlashcardView }
+export { flashcardView, createFlashcardView, homeView, listFlashcardView }

@@ -5,7 +5,8 @@
 
 const { render } = require("./render")
 const { store, uiStore } = require('./store');
-const { flashcardView, route, createFlashcardView, homeView, listFlashcardView } = require('./view');
+const { flashcardView, createFlashcardView, homeView, listFlashcardView } = require('./view');
+const { route } = require("./easydom")
 
 const root = "SUPER_ROOT";
 
@@ -38,10 +39,6 @@ test('test home view', () => {
 })
 
 test('test flashcard view', () => {
-    document.body.innerHTML = 
-    '<h1> Hello, World!</h1>' +
-    '<div id="SUPER_ROOT"></div>'
-
     const flash = flashcardView({
         id: 2,
         name: "test name",
@@ -58,11 +55,6 @@ test('test flashcard view', () => {
 });
 
 test('test flashcard list view', () => {
-    document.body.innerHTML = 
-    '<h1> Hello, World!</h1>' +
-    '<div id="SUPER_ROOT"></div>'
-
-    store.dispatch({type: "clear"})
     store.dispatch({type: "flashcard/create", 
         card: {
             id: 2,
@@ -86,10 +78,6 @@ test('test flashcard list view', () => {
 });
 
 test('test flashcard create view', () => {
-    document.body.innerHTML = 
-    '<h1> Hello, World!</h1>' +
-    '<div id="SUPER_ROOT"></div>'
-
     const view = createFlashcardView()
     route(root, view)
 

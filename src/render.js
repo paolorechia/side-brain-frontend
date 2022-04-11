@@ -1,5 +1,6 @@
 
-import { attach, createFlashcardView, homeView, listFlashcardView } from "./view"
+import { createFlashcardView, homeView, listFlashcardView } from "./view"
+import { attach } from "./easydom"
 
 function render(root, store, uiStore) {
     // Clear state

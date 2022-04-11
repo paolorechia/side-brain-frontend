@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 
-function counterReducer(state = { flashcards: [] }, action) {
+function flashcardReducer(state = { flashcards: [] }, action) {
   switch (action.type) {
     case 'flashcard/add':
       return { flashcards: [...state.flashcards, action.card] }
@@ -24,6 +24,6 @@ function counterReducer(state = { flashcards: [] }, action) {
   }
 }
 
-let store = createStore(counterReducer)
+let store = createStore(flashcardReducer)
 
 export { store };

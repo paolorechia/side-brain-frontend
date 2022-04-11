@@ -24,17 +24,36 @@ function flashcardReducer(state = { flashcards: [] }, action) {
   }
 }
 
+let uiHistory = []
+
+function dispatchUIUndo() {
+  console.log("Undoing...")
+  const last = uiHistory.pop()
+  console.log(last)
+  if (last) {
+    uiStore.dispatch({type: last, isUndo: true})
+  }
+}
+
 function uiEventsReducer(state = { screen: "home" }, action) {
-  console.log("UI Event Action:", action)
   switch(action.type) {
     case 'flashcard/create': {
-      return { screen: "flashcard/create"}
+      if (!action.isUndo) {
+        uiHistory.push(state.screen)
+      }
+      return { screen: "flashcard/create" }
     }
     case 'flashcard/list': {
-      return { screen: "flashcard/list"}
+      if (!action.isUndo) {
+        uiHistory.push(state.screen)
+      }
+      return { screen: "flashcard/list" }
     }
-    case 'reset': {
-      return { screen: "home"}
+    case 'home': {
+      if (!action.isUndo) {
+        uiHistory.push(state.screen)
+      }
+      return { screen: "home" }
     }
     default:
       return state
@@ -45,4 +64,6 @@ let store = createStore(flashcardReducer)
 
 let uiStore = createStore(uiEventsReducer)
 
-export { store, uiStore };
+uiStore.undo = dispatchUIUndo
+
+export { store, uiStore, dispatchUIUndo };

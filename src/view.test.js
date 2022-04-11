@@ -14,8 +14,8 @@ beforeEach(() => {
     document.body.innerHTML = 
     '<div id="SUPER_ROOT"></div>'
 
-    uiStore.dispatch({type: "reset"})
-    store.dispatch({type: "clear"})
+    uiStore.dispatch({type: "home"})
+    store.dispatch({type: "flashcard/clear"})
 
     const rootEl = document.getElementById("SUPER_ROOT")
     render(rootEl, store, uiStore)
@@ -79,7 +79,13 @@ test('test flashcard list view', () => {
 
 test('test flashcard create view', () => {
     const view = createFlashcardView()
-    route(root, view)
+
+    uiStore.dispatch({type: "flashcard/list"})
+    const rootEl = document.getElementById("SUPER_ROOT")
+    uiStore.dispatch({type: "flashcard/create"})
+    render(rootEl, store, uiStore)
+
+    expect(uiStore.getState().screen).toBe("flashcard/create")
 
     const div = document.querySelector(".create-flash-card-div")
     expect(div).toBeTruthy()
@@ -88,5 +94,26 @@ test('test flashcard create view', () => {
     const confirm = document.querySelector(".create-flash-card-button-confirm")
 
     expect(cancel).toBeTruthy()
+
+
     expect(confirm).toBeTruthy()
+
+    cancel.click()
+    expect(uiStore.getState().screen).toBe("flashcard/list")
+
+    uiStore.dispatch({type: "flashcard/create"})
+
+    document.getElementsByClassName("create-id-input")[0].value = "30"
+    document.getElementsByClassName("create-name-input")[0].value = "Test name"
+    document.getElementsByClassName("create-category-input")[0].value = "Test category"
+
+    const confirm2 = document.querySelector(".create-flash-card-button-confirm")
+
+    confirm2.click()
+    expect(uiStore.getState().screen).toBe("flashcard/list")
+
+    const cards = store.getState().flashcards
+    expect(cards[0].id).toBe("30")
+    expect(cards[0].name).toBe("Test name")
+    expect(cards[0].category).toBe("Test category")
 })

@@ -1,4 +1,4 @@
-import { div, button, paragraph, input, route, attach } from "./easydom"
+import { div, button, paragraph, input, attach } from "./easydom"
 
 function homeView(store, uiStore) {
     const d = div(["home-div"])
@@ -17,6 +17,7 @@ function homeView(store, uiStore) {
 
 
 function listFlashcardView(store, uiStore) {
+    console.log("Rendering list")
     // Render flashcards
     const state = store.getState()
     const d = div(["flash-card-list-div"])
@@ -33,8 +34,7 @@ function listFlashcardView(store, uiStore) {
     attach(bottom, create)
 
     create.addEventListener("click", function() {
-        console.log("Click")
-        uiStore.dispatch({screen: "flashcard/create"})
+        uiStore.dispatch({type: "flashcard/create"})
     })
 
     return d
@@ -58,17 +58,31 @@ function flashcardView(flashcard) {
     return d
 }
 
-function createFlashcardView() {
+function createFlashcardView(store, uiStore) {
     const div = document.createElement("div")
 
     div.classList.add("create-flash-card-div")
 
-    const id = input("ID", [])
-    const name = input("Name", [])
-    const category = input("Category", [])
+    const id = input("ID", ["create-id-input"])
+    const name = input("Name", ["create-name-input"])
+    const category = input("Category", ["create-category-input"])
 
     const cancel = button("Cancel", ["create-flash-card-button-cancel"])
+
+    cancel.addEventListener("click", function() {
+        uiStore.undo()
+    })
+
     const confirm = button("Confirm", ["create-flash-card-button-confirm"])
+    confirm.addEventListener("click", function() {
+        console.log("Confirm!")
+        store.dispatch({type: "flashcard/create", card: {
+            id: id.value,
+            name: name.value,
+            category: category.value
+        }})
+        uiStore.dispatch({type: "flashcard/list"})
+    })
 
     attach(div, id)
     attach(div, name)

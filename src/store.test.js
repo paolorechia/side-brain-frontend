@@ -29,7 +29,7 @@ test('Update flashcard', () => {
 });
 
 test("UI Store reducer", () => {
-    uiStore.dispatch({type: "reset"})
+    uiStore.dispatch({type: "home"})
     expect(uiStore.getState().screen).toBe("home")
 
     uiStore.dispatch({type: "flashcard/create"})
@@ -38,7 +38,7 @@ test("UI Store reducer", () => {
     uiStore.dispatch({type: "flashcard/list"})
     expect(uiStore.getState().screen).toBe("flashcard/list")
 
-    uiStore.dispatch({type: "reset"})
+    uiStore.dispatch({type: "home"})
     expect(uiStore.getState().screen).toBe("home")
 
 })

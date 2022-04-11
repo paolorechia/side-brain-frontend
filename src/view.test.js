@@ -39,7 +39,7 @@ test('test home view', () => {
 })
 
 test('test flashcard view', () => {
-    const flash = flashcardView({
+    const flash = flashcardView(store, uiStore, {
         id: 2,
         name: "test name",
         category: "Is this real?"
@@ -52,6 +52,24 @@ test('test flashcard view', () => {
     expect(div.children[0].innerText).toBe(2)
     expect(div.children[1].innerText).toBe("test name")
     expect(div.children[2].innerText).toBe("Is this real?")
+});
+
+test('test flashcard view delete', () => {
+    const card = {
+        id: 2,
+        name: "test name",
+        category: "Is this real?"
+    }
+    const flash = flashcardView(store, uiStore, card)
+    route(root, flash)
+    store.dispatch({type: "flashcard/create", card: card})
+
+    expect(store.getState().flashcards.length).toBe(1)
+    const del = document.querySelector(".flash-card-button-delete")
+    del.click()
+
+    const cards = store.getState().flashcards
+    expect(cards.length).toBe(0)
 });
 
 test('test flashcard list view', () => {

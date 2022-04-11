@@ -23,7 +23,7 @@ function listFlashcardView(store, uiStore) {
     const d = div(["flash-card-list-div"])
 
     state.flashcards.map(flashcard => {
-        attach(d, flashcardView(flashcard))
+        attach(d, flashcardView(store, uiStore, flashcard))
     })
 
     // Render static part
@@ -40,12 +40,17 @@ function listFlashcardView(store, uiStore) {
     return d
 }
 
-function flashcardView(flashcard) {        
+function flashcardView(store, uiStore, flashcard) {        
     const d = div(["flash-card-div"])
 
     const id = document.createElement("span")
     const name = document.createElement("span")
     const category = document.createElement("span")
+    const del = button("Delete", ["flash-card-button-delete"])
+    del.addEventListener("click", function() {
+        store.dispatch({type: "flashcard/delete", card: {id: flashcard.id}})
+        uiStore.dispatch({type: "flashcard/list", skipHistory: true})
+    })
 
     id.innerText = flashcard.id
     name.innerText = flashcard.name
@@ -54,6 +59,7 @@ function flashcardView(flashcard) {
     attach(d, id)
     attach(d, name)
     attach(d, category)
+    attach(d, del)
 
     return d
 }
@@ -92,6 +98,5 @@ function createFlashcardView(store, uiStore) {
 
     return div
 }
-
 
 export { flashcardView, createFlashcardView, homeView, listFlashcardView }

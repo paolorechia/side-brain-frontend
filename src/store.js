@@ -4,7 +4,7 @@ function flashcardReducer(state = { flashcards: [] }, action) {
   switch (action.type) {
     case 'flashcard/create':
       return { flashcards: [...state.flashcards, action.card] }
-    case 'flashcard/remove':
+    case 'flashcard/delete':
       return { flashcards: state.flashcards.filter(card => card.id !== action.card.id) }
     case 'flashcard/update':
       let flashcards = state.flashcards.map(card => {
@@ -38,19 +38,19 @@ function dispatchUIUndo() {
 function uiEventsReducer(state = { screen: "home" }, action) {
   switch(action.type) {
     case 'flashcard/create': {
-      if (!action.isUndo) {
+      if (!action.isUndo && !action.skipHistory) {
         uiHistory.push(state.screen)
       }
       return { screen: "flashcard/create" }
     }
     case 'flashcard/list': {
-      if (!action.isUndo) {
+      if (!action.isUndo && !action.skipHistory) {
         uiHistory.push(state.screen)
       }
       return { screen: "flashcard/list" }
     }
     case 'home': {
-      if (!action.isUndo) {
+      if (!action.isUndo && !action.skipHistory) {
         uiHistory.push(state.screen)
       }
       return { screen: "home" }

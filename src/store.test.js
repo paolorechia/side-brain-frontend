@@ -14,7 +14,7 @@ test('Add flashcard', () => {
 test('Remove flashcard', () => {
     store.dispatch({type: "flashcard/clear"})
     store.dispatch({type: "flashcard/create", card: {id: 1, name: "test"}})
-    store.dispatch({type: "flashcard/remove", card: {id: 1}})
+    store.dispatch({type: "flashcard/delete", card: {id: 1}})
     expect(store.getState().flashcards.length).toBe(0)
 });
 

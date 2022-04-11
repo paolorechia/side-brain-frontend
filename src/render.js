@@ -8,9 +8,8 @@ function render(root, store, uiStore) {
 
     // Render screen
     const uiState = uiStore.getState()
-    const home = homeView(store, uiStore)
     if (uiState.screen === 'home') {
-        attach(root, home)
+        attach(root, homeView(store, uiStore))
     } else if (uiState.screen === 'flashcard/list') {
         attach(root, listFlashcardView(store, uiStore))
     } else if (uiState.screen === 'flashcard/create') {

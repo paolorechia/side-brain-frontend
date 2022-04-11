@@ -24,6 +24,24 @@ function flashcardReducer(state = { flashcards: [] }, action) {
   }
 }
 
+function uiEventsReducer(state = { screen: "home" }, action) {
+  switch(action.type) {
+    case 'flashcard/create': {
+      return { screen: "flashcard/create"}
+    }
+    case 'flashcard/list': {
+      return { screen: "flashcard/list"}
+    }
+    case 'reset': {
+      return { screen: "home"}
+    }
+    default:
+      return state
+  }
+}
+
 let store = createStore(flashcardReducer)
 
-export { store };
+let uiStore = createStore(uiEventsReducer)
+
+export { store, uiStore };

@@ -4,15 +4,13 @@
  */
 
 
-test('test main exists', () => {
+test('Test main exists', () => {
     document.body.innerHTML = 
     '<h1> Hello, World!</h1>' +
     '<div id="SUPER_ROOT"></div>'
 
-    require('./main');
-
-    let elements = document.getElementsByClassName("test-class")
-    expect(elements).toBeTruthy()
+    const main = require('./main');
+    expect(main.uiStore.getState().screen).toBe("home")
 });
 
 

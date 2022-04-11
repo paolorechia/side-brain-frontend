@@ -1,4 +1,4 @@
-import { store } from "./store"
+import { store, uiStore } from "./store"
 
 test('Test store exists and starts empty', () => {
     expect(store).toBeTruthy()
@@ -27,3 +27,18 @@ test('Update flashcard', () => {
     expect(state.flashcards[0].name).toBe("Wow")
     expect(state.flashcards[0].category).toBe("dunno")
 });
+
+test("UI Store reducer", () => {
+    uiStore.dispatch({type: "reset"})
+    expect(uiStore.getState().screen).toBe("home")
+
+    uiStore.dispatch({type: "flashcard/create"})
+    expect(uiStore.getState().screen).toBe("flashcard/create")
+
+    uiStore.dispatch({type: "flashcard/list"})
+    expect(uiStore.getState().screen).toBe("flashcard/list")
+
+    uiStore.dispatch({type: "reset"})
+    expect(uiStore.getState().screen).toBe("home")
+
+})

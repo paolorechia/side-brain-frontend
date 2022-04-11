@@ -2,7 +2,7 @@ import { createStore } from 'redux'
 
 function flashcardReducer(state = { flashcards: [] }, action) {
   switch (action.type) {
-    case 'flashcard/add':
+    case 'flashcard/create':
       return { flashcards: [...state.flashcards, action.card] }
     case 'flashcard/remove':
       return { flashcards: state.flashcards.filter(card => card.id !== action.card.id) }
@@ -25,6 +25,7 @@ function flashcardReducer(state = { flashcards: [] }, action) {
 }
 
 function uiEventsReducer(state = { screen: "home" }, action) {
+  console.log("UI Event Action:", action)
   switch(action.type) {
     case 'flashcard/create': {
       return { screen: "flashcard/create"}

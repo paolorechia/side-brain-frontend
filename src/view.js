@@ -37,9 +37,14 @@ function homeView(store, uiStore) {
     const d = div(["home-div"])
     const p = paragraph("Welcome!", ["home-message"])
 
+    const next = button("Next", ["home-next-button"])
     attach(d, p)
+    attach(d, next)
 
-    console.log(d)
+    next.addEventListener("click", function() {
+        uiStore.dispatch({type: "flashcard/list"})
+    })
+
     return d
 }
 
@@ -64,6 +69,8 @@ function listFlashcardView(store, uiStore) {
         console.log("Click")
         uiStore.dispatch({screen: "flashcard/create"})
     })
+
+    return d
 }
 
 function flashcardView(flashcard) {        

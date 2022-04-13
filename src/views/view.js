@@ -1,4 +1,4 @@
-import { div, button, paragraph, input, attach } from "./easydom"
+import { div, button, paragraph, input, attach } from "../domutils/easydom"
 
 function homeView(store, uiStore) {
     const d = div(["home-div"])

@@ -3,10 +3,10 @@
  * @jest-environment jsdom
  */
 
-const { render } = require("./render")
-const { store, uiStore } = require('./store');
+const { render } = require("../render")
+const { store, uiStore } = require('../stores/store');
 const { flashcardView, createFlashcardView, homeView, listFlashcardView } = require('./view');
-const { route } = require("./easydom")
+const { route } = require("../domutils/easydom")
 
 const root = "SUPER_ROOT";
 
